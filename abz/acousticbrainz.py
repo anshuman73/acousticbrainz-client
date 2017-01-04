@@ -62,10 +62,7 @@ def is_processed(filepath):
     query = """select * from filelog where filename = ?"""
     c = conn.cursor()
     r = c.execute(query, (compat.decode(filepath), ))
-    if len(r.fetchall()):
-        return True
-    else:
-        return False
+    return not all([result[2] for result in r.fetchall()])
 
 
 def run_extractor(input_path, output_path):
